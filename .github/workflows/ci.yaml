@@ -1,1 +1,47 @@
+name: Java CI/CD pipline # name of your workflow
+on: # trigger the workflow on push event
+   push:
+     branches:
+     - main # set the branch name you want to trigger the workflow
+     - dev # set the branch name you want to trigger the workflow
 
+jobs:
+  build-and-deploy: # name of 1st job
+
+    runs-on: ubuntu-latest # set the runner environment
+
+    defaults: # set default values for the job
+      run:
+        working-directory: ./java-github-actions-demo # set the working directory for the commands
+
+    steps:
+  
+    #step1 
+    - name: Checkout code # step name
+      uses: actions/checkout@v4 # action to checkout the code
+      
+    #step2
+    - name: Set up JDK 17 # step name
+      uses: actions/setup-java@v4 # action to setup Java
+      with:
+        distribution: 'temurin' # set the Java distribution
+        java-version: '17' # set the Java version
+        cache: 'maven' # enable caching for Maven dependencies
+
+    #step3
+    - name: Print a message # step name
+      run: echo Hello, world! # command to run
+
+    #step4   
+    - name: Build with Maven # step name
+      run: mvn clean package # command to build the project
+  
+    #step5
+    - name: Run tests # step name
+      run: mvn test # command to run tests
+    
+    #step6
+    - name: Deployment (Placeholder) # step name
+      run: |
+        echo "Deploying application..." # command to deploy the application
+        echo "JAR available in target/"
